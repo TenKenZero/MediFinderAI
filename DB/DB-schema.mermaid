@@ -1,0 +1,91 @@
+erDiagram
+    REGION {
+        int region_id PK
+        varchar name
+        varchar code
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    MEDICAL_CENTER {
+        int center_id PK
+        varchar code
+        varchar name
+        int region_id FK
+        varchar category
+        varchar reporter_name
+        varchar institution_type
+        varchar reporter_type
+        varchar address
+        float latitude
+        float longitude
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    PRODUCT_TYPE {
+        int type_id PK
+        char code
+        varchar name
+        varchar description
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    PRODUCT {
+        int product_id PK
+        varchar code
+        varchar name
+        int type_id FK
+        varchar description
+        varchar dosage_form
+        varchar strength
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    INVENTORY {
+        int inventory_id PK
+        int center_id FK
+        int product_id FK
+        int current_stock
+        float avg_monthly_consumption
+        int accumulated_consumption_4m
+        float measurement
+        int last_month_consumption
+        int last_month_stock
+        varchar status_indicator
+        float cpma_12_months_ago
+        float cpma_24_months_ago
+        float cpma_36_months_ago
+        int accumulated_consumption_12m
+        date report_date
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    USER {
+        int user_id PK
+        varchar phone_number
+        varchar name
+        varchar preferred_location
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    SEARCH_HISTORY {
+        int search_id PK
+        int user_id FK
+        varchar product_query
+        varchar location_query
+        float search_radius
+        int results_count
+        timestamp created_at
+    }
+    
+    REGION ||--o{ MEDICAL_CENTER : "has"
+    PRODUCT_TYPE ||--o{ PRODUCT : "categorizes"
+    MEDICAL_CENTER ||--o{ INVENTORY : "stocks"
+    PRODUCT ||--o{ INVENTORY : "stocked_at"
+    USER ||--o{ SEARCH_HISTORY : "performs"
