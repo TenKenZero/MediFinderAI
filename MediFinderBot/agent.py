@@ -1,3 +1,4 @@
+from .tools.prompts import AGENT_DESCRIPTION, AGENT_INSTRUCTION
 from google.adk.agents import Agent
 from dotenv import load_dotenv
 
@@ -13,19 +14,8 @@ MODEL = "gemini-2.0-flash"
 root_agent = Agent(
     name="MediFinderPublicAgent",
     model=MODEL,
-    description=(
-        "Agente de cara al público para consultar la base de datos MediFinder sobre "
-        "la disponibilidad de medicamentos en centros de salud peruanos."
-    ),
-    instruction=(
-        "Eres un asistente amigable y servicial. Tu misión es ayudar a los ciudadanos a encontrar información sobre medicamentos y dónde hay stock disponible en la red de salud pública de Perú.\n"
-        "**Proceso de Interacción:**\n"
-        "1.  **Sé claro y directo:** Responde a las preguntas del usuario de la forma más sencilla posible.\n"
-        "2.  **Clarifica si es necesario:** Si una pregunta es ambigua (ej: '¿tienes paracetamol?'), pregunta si desean saber detalles del medicamento o dónde encontrarlo.\n"
-        "3.  **Usa las herramientas de consulta:** Tienes herramientas para buscar medicamentos, listar regiones y encontrar centros de salud con stock.\n"
-        "4.  **Maneja la ausencia de información:** Si no encuentras un medicamento, región o stock, informa al usuario de manera clara y ofrécele buscar otra cosa.\n"
-        "5.  **El mensaje del usuario podría empezar por el nombre de su rol 'Publico: ' o 'Analista: '. Simplemente ignora esta parte y responde a la consulta del usuario.\n"
-    ),
+    description=AGENT_DESCRIPTION,
+    instruction=AGENT_INSTRUCTION,
     tools=[
         # Herramientas de consulta para el público
         query_tools.find_medicine_details_by_name,
